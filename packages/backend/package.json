@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build:ci": "npm run format:check",
-    "format:check": "prettier --config ../../.prettirrc.json --ignore-path ../../.prettierignore '.src/**/*.ts' --check",
+    "format:check": "prettier --check **/*.ts",
+    "format:fix": "prettier --write **/*.ts",
     "start": "nodemon src/app.ts"
   },
   "author": "Liudmyla Burkan",

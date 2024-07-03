@@ -1,4 +1,4 @@
-import SubTaskEntity from "./SubTaskEntity";
+import SubTaskEntity from './SubTaskEntity';
 
 export default class TaskEntity {
   constructor(
@@ -8,6 +8,6 @@ export default class TaskEntity {
     public createdAt: Date,
     public updatedAt: Date,
     public subTasks: SubTaskEntity[],
-    public id?: string
+    public id?: string,
   ) {}
 }

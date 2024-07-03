@@ -6,6 +6,6 @@ export class TaskDto {
     public createdAt: Date,
     public updatedAt: Date,
     public subTasks: { title: string }[],
-    public id?: string
+    public id?: string,
   ) {}
 }

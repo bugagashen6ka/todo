@@ -1,3 +1,6 @@
 export class SubTaskDto {
-  constructor(public title: string, public id?: string) {}
+  constructor(
+    public title: string,
+    public id?: string,
+  ) {}
 }

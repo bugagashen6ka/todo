@@ -1,4 +1,4 @@
-import ITodoRepository from "../../repositories/ITodoRepository";
+import ITodoRepository from '../../repositories/ITodoRepository';
 
 export class DeleteSubTaskUseCase {
   constructor(private todoRepository: ITodoRepository) {}

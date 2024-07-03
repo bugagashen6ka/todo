@@ -1,5 +1,5 @@
-import { Document } from "mongoose";
-import { SubTask, SubTaskDocument } from "./subtask.interface";
+import { Document } from 'mongoose';
+import { SubTask, SubTaskDocument } from './subtask.interface';
 
 export interface Task {
   title: string;

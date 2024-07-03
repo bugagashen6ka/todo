@@ -1,6 +1,6 @@
-import ITodoRepository from "../../repositories/ITodoRepository";
-import { TaskDto } from "../TaskDto";
-import { toTaskDTO } from "../toTaskDto";
+import ITodoRepository from '../../repositories/ITodoRepository';
+import { TaskDto } from '../TaskDto';
+import { toTaskDTO } from '../toTaskDto';
 
 export class GetTaskUseCase {
   constructor(private todoRepository: ITodoRepository) {}

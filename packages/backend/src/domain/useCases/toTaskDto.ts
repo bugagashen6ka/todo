@@ -1,5 +1,5 @@
-import TaskEntity from "../entities/TaskEntity";
-import { TaskDto } from "./TaskDto";
+import TaskEntity from '../entities/TaskEntity';
+import { TaskDto } from './TaskDto';
 
 export function toTaskDTO(task: TaskEntity): TaskDto {
   return new TaskDto(
@@ -9,6 +9,6 @@ export function toTaskDTO(task: TaskEntity): TaskDto {
     task.createdAt,
     task.updatedAt,
     task.subTasks,
-    task.id
+    task.id,
   );
 }

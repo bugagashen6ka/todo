@@ -1,6 +1,6 @@
-import {  Schema, model } from "mongoose";
-import { TaskDocument } from "../../core/types/task.interface";
-import { subTaskSchema } from "./subTask";
+import { Schema, model } from 'mongoose';
+import { TaskDocument } from '../../core/types/task.interface';
+import { subTaskSchema } from './subTask';
 
 const taskSchema = new Schema<TaskDocument>(
   {
@@ -22,9 +22,9 @@ const taskSchema = new Schema<TaskDocument>(
   },
   {
     timestamps: true,
-  }
+  },
 );
-taskSchema.set("toJSON", {
+taskSchema.set('toJSON', {
   virtuals: true,
   versionKey: false,
   transform: function (doc, ret) {
@@ -32,5 +32,5 @@ taskSchema.set("toJSON", {
     delete ret._id;
   },
 });
-const TaskModel = model<TaskDocument>("Task", taskSchema);
+const TaskModel = model<TaskDocument>('Task', taskSchema);
 export default TaskModel;

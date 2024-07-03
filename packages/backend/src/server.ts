@@ -1,11 +1,11 @@
-import express, { Request, Response, NextFunction } from "express";
-import { createServer } from "http";
-import bodyParser from "body-parser";
-import cors from "cors";
-import { errorHandler } from "./presentation/middlewares/errorHandler";
-import { ServerOptions } from "./core/types/serverOptions.type";
-import { ApplicationError } from "./core/utils/errors/applicationError";
-import { router } from "./composition-root";
+import express, { Request, Response, NextFunction } from 'express';
+import { createServer } from 'http';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { errorHandler } from './presentation/middlewares/errorHandler';
+import { ServerOptions } from './core/types/serverOptions.type';
+import { ApplicationError } from './core/utils/errors/applicationError';
+import { router } from './composition-root';
 
 export class ExpressServer {
   public readonly app = express();
@@ -30,16 +30,9 @@ export class ExpressServer {
   }
 
   private addErrorHandling(): void {
-    this.app.all(
-      "*",
-      (req: Request, _res: Response, next: NextFunction): void => {
-        next(
-          ApplicationError.notFound(
-            `Cant find ${req.originalUrl} on the server.`
-          )
-        );
-      }
-    );
+    this.app.all('*', (req: Request, _res: Response, next: NextFunction): void => {
+      next(ApplicationError.notFound(`Cant find ${req.originalUrl} on the server.`));
+    });
     this.app.use(errorHandler);
   }
 

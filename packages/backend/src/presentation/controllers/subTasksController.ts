@@ -1,17 +1,13 @@
-import { NextFunction, Response, Request } from "express";
-import { CreateSubTaskUseCase } from "../../domain/useCases/subTasks/CreateSubTaskUseCase";
-import { DeleteSubTaskUseCase } from "../../domain/useCases/subTasks/DeleteSubTaskUseCase";
+import { NextFunction, Response, Request } from 'express';
+import { CreateSubTaskUseCase } from '../../domain/useCases/subTasks/CreateSubTaskUseCase';
+import { DeleteSubTaskUseCase } from '../../domain/useCases/subTasks/DeleteSubTaskUseCase';
 
 export class SubTasksController {
   constructor(
     private createSubTaskUseCase: CreateSubTaskUseCase,
-    private deleteSubTaskUseCase: DeleteSubTaskUseCase
+    private deleteSubTaskUseCase: DeleteSubTaskUseCase,
   ) {}
-  public createSubTask = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public createSubTask = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id, subTask } = req.body;
       const subTasks = await this.createSubTaskUseCase.execute(id, subTask);
@@ -21,11 +17,7 @@ export class SubTasksController {
       next(err);
     }
   };
-  public deleteSubTask = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public deleteSubTask = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { subtaskid: subTaskId } = req.params;
       const deleted = await this.deleteSubTaskUseCase.execute(subTaskId);

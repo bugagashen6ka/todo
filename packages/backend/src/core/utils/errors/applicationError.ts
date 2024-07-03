@@ -1,4 +1,4 @@
-import { HttpStatusCode } from "../httpStatusCode";
+import { HttpStatusCode } from '../httpStatusCode';
 
 export class ApplicationError extends Error {
   private readonly isOperational = true;
@@ -6,7 +6,7 @@ export class ApplicationError extends Error {
   constructor(
     public name: string,
     public message: string,
-    public statusCode: HttpStatusCode
+    public statusCode: HttpStatusCode,
   ) {
     super(message);
 
@@ -14,19 +14,11 @@ export class ApplicationError extends Error {
   }
 
   static notFound(message: string): ApplicationError {
-    console.log("NotFoundError", message);
-    return new ApplicationError(
-      "NotFoundError",
-      message,
-      HttpStatusCode.NOT_FOUND
-    );
+    console.log('NotFoundError', message);
+    return new ApplicationError('NotFoundError', message, HttpStatusCode.NOT_FOUND);
   }
 
   static badRequest(message: string): ApplicationError {
-    return new ApplicationError(
-      "BadRequestError",
-      message,
-      HttpStatusCode.BAD_REQUEST
-    );
+    return new ApplicationError('BadRequestError', message, HttpStatusCode.BAD_REQUEST);
   }
 }

@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { SubTaskDocument } from "../../core/types/subtask.interface";
+import { Schema, model } from 'mongoose';
+import { SubTaskDocument } from '../../core/types/subtask.interface';
 
 export const subTaskSchema = new Schema<SubTaskDocument>({
   title: {
@@ -8,7 +8,7 @@ export const subTaskSchema = new Schema<SubTaskDocument>({
   },
 });
 
-subTaskSchema.set("toJSON", {
+subTaskSchema.set('toJSON', {
   virtuals: true,
   versionKey: false,
   transform: function (doc, ret) {
@@ -17,4 +17,4 @@ subTaskSchema.set("toJSON", {
   },
 });
 
-export default model<SubTaskDocument>("SubTask", subTaskSchema);
+export default model<SubTaskDocument>('SubTask', subTaskSchema);
