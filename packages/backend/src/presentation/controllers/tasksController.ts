@@ -1,10 +1,10 @@
-import { NextFunction, Response, Request } from "express";
-import { ApplicationError } from "../../core/utils/errors/applicationError";
-import { GetAllTasksUseCase } from "../../domain/useCases/tasks/GetAllTasksUseCase";
-import { CreateTaskUseCase } from "../../domain/useCases/tasks/CreateTaskUseCase";
-import { GetTaskUseCase } from "../../domain/useCases/tasks/GetTaskUseCase copy";
-import { UpdateTaskUseCase } from "../../domain/useCases/tasks/UpdateTaskUseCase";
-import { DeleteTaskUseCase } from "../../domain/useCases/tasks/DeleteTaskUseCase";
+import { NextFunction, Response, Request } from 'express';
+import { ApplicationError } from '../../core/utils/errors/applicationError';
+import { GetAllTasksUseCase } from '../../domain/useCases/tasks/GetAllTasksUseCase';
+import { CreateTaskUseCase } from '../../domain/useCases/tasks/CreateTaskUseCase';
+import { GetTaskUseCase } from '../../domain/useCases/tasks/GetTaskUseCase copy';
+import { UpdateTaskUseCase } from '../../domain/useCases/tasks/UpdateTaskUseCase';
+import { DeleteTaskUseCase } from '../../domain/useCases/tasks/DeleteTaskUseCase';
 
 export class TasksController {
   constructor(
@@ -12,7 +12,7 @@ export class TasksController {
     private getTaskUseCase: GetTaskUseCase,
     private createTaskUseCase: CreateTaskUseCase,
     private updateTaskUseCase: UpdateTaskUseCase,
-    private deleteTaskUseCase: DeleteTaskUseCase
+    private deleteTaskUseCase: DeleteTaskUseCase,
   ) {}
   public getTasks = async (_: Request, res: Response, next: NextFunction) => {
     try {
@@ -26,7 +26,7 @@ export class TasksController {
   public getTask = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const task = await this.getTaskUseCase.execute(req.params.id);
-      //TODO validation
+      //TODO validation!
       if (task) {
         res.send(task);
       }
@@ -35,16 +35,12 @@ export class TasksController {
     }
   };
 
-  public createTask = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public createTask = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const createdTask = await this.createTaskUseCase.execute(
         req.body.title,
         req.body.description,
-        req.body.completed
+        req.body.completed,
       );
       res.statusCode = 201;
       res.send(createdTask);
@@ -53,22 +49,16 @@ export class TasksController {
     }
   };
 
-  public updateTask = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public updateTask = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const updatedTask = await this.updateTaskUseCase.execute(
         req.body.id,
         req.body.title,
         req.body.description,
-        req.body.completed
+        req.body.completed,
       );
       if (!updatedTask) {
-        throw ApplicationError.notFound(
-          `Failed to update task with id=${req.body.taskId}.`
-        );
+        throw ApplicationError.notFound(`Failed to update task with id=${req.body.taskId}.`);
       }
       res.send(updatedTask);
     } catch (err) {
@@ -76,18 +66,12 @@ export class TasksController {
     }
   };
 
-  public deleteTask = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
+  public deleteTask = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const deletedTask = await this.deleteTaskUseCase.execute(req.params.id);
       console.log(deletedTask);
       if (!deletedTask) {
-        throw ApplicationError.notFound(
-          `Failed to delete task with id=${req.params.id}.`
-        );
+        throw ApplicationError.notFound(`Failed to delete task with id=${req.params.id}.`);
       }
       res.send(deletedTask);
     } catch (err) {
