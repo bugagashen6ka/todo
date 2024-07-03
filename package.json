@@ -1,0 +1,25 @@
+{
+  "name": "todo",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "build:ci": "npm run build:ci --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:ci": "npm run test --workspaces --if-present",
+    "test:integration": "npm run test --workspaces --if-present",
+    "start:frontend": "npm run start --workspace=frontend",
+    "start:backend": "npm run start --workspace=backend"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/node": "^20.6.0",
+    "prettier": "^3.3.2",
+    "rimraf": "^5.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.5"
+  }
+}

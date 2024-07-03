@@ -4,6 +4,8 @@
   "description": "TODO app backend",
   "main": "index.js",
   "scripts": {
+    "build:ci": "npm run format:check",
+    "format:check": "prettier --config ../../.prettirrc.json --ignore-path ../../.prettierignore '.src/**/*.ts' --check",
     "start": "nodemon src/app.ts"
   },
   "author": "Liudmyla Burkan",

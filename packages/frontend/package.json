@@ -1,5 +1,5 @@
 {
-  "name": "todo",
+  "name": "frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,7 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand",
-    "e2e": "ng e2e",
+    "test:integration": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
