@@ -1,0 +1,26 @@
+<header class="header">
+  <h1>Lean Todos</h1>
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input
+        formControlName="title"
+        type="title"
+        placeholder="Title"
+        data-cy="newTaskTitle"
+        data-testid="newTitle"
+        (keyup.enter)="onSubmit()"
+      />
+      <div *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+        <small *ngIf="form.get('title')?.errors">Title is required.</small>
+      </div>
+      <input
+        formControlName="description"
+        type="description"
+        placeholder="Description"
+        data-cy="newDescription"
+        data-testid="newDescription"
+        (keydown.enter)="onSubmit()"
+      />
+    </form>
+  </div>
+</header>

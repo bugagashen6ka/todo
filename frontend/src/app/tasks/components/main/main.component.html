@@ -1,0 +1,124 @@
+<section class="main" *ngIf="tasks$ | async as tasks">
+  <table
+    *ngIf="tasks && tasks.length > 0"
+    data-testid="todo"
+    [ngClass]="{ editing: editingTaskId }"
+  >
+    <thead>
+      <tr>
+        <th>IsCompleted</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Delete</th>
+        <th>Subtasks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-cy="tasks" *ngFor="let task of tasks$ | async">
+        <td>
+          <input
+            class="toggle"
+            type="checkbox"
+            data-cy="toggle"
+            data-testid="toggle"
+            [checked]="task.completed"
+            (change)="
+              changeTask(task.id, task.title, task.description, !task.completed)
+            "
+          />
+        </td>
+        <ng-container
+          *ngIf="task.id !== editingTaskId || editingProperty !== 'title'"
+        >
+          <td
+            data-cy="taskTitle"
+            data-testid="showTitle"
+            (click)="setInEditMode(task.id, 'title')"
+          >
+            {{ task.title }}
+          </td>
+        </ng-container>
+        <ng-container
+          *ngIf="task.id === editingTaskId && editingProperty === 'title'"
+        >
+          <td>
+            <input
+              class="edit"
+              #textInput
+              data-cy="editTitle"
+              data-testid="editTitle"
+              [value]="task.title"
+              (keyup)="changeTextTitle($event)"
+              (keyup.enter)="
+                changeTask(
+                  task.id,
+                  editingTextTitle,
+                  task.description,
+                  task.completed
+                )
+              "
+            />
+          </td>
+        </ng-container>
+
+        <ng-container
+          *ngIf="task.id !== editingTaskId || editingProperty !== 'description'"
+        >
+          <td
+            data-cy="taskDescription"
+            data-testid="showDescription"
+            (click)="setInEditMode(task.id, 'description')"
+          >
+            {{ task.description }}
+          </td>
+        </ng-container>
+        <ng-container
+          *ngIf="task.id === editingTaskId && editingProperty === 'description'"
+        >
+          <td>
+            <input
+              class="edit"
+              #textInput
+              data-cy="editDescription"
+              data-testid="editDescription"
+              [value]="task.description"
+              (keyup)="changeTextDescription($event)"
+              (keyup.enter)="
+                changeTask(
+                  task.id,
+                  task.title,
+                  editingTextDescription,
+                  task.completed
+                )
+              "
+            />
+          </td>
+        </ng-container>
+        <td>
+          <button
+            class="delete"
+            data-cy="deleteTaskButton"
+            data-testid="deleteTaskButton"
+            (click)="deleteTask(task.id)"
+          >
+            Delete
+          </button>
+        </td>
+        <td>
+          <button
+            data-cy="subtasks"
+            class="add-subtasks"
+            (click)="openSlidePanel(task.id)"
+          >
+            Edit Subtasks
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<app-tasks-subTasks
+  [isOpen]="isSlidePanelOpen"
+  [taskId]="editingTaskId"
+  (closeEvent)="onCloseSlidePanel()"
+></app-tasks-subTasks>

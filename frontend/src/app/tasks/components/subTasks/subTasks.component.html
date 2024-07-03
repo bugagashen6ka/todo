@@ -1,0 +1,52 @@
+<app-slide-panel
+  [headerText]="'Subtasks'"
+  [isOpen]="isOpen"
+  (onClose)="onCloseSlidePanel()"
+>
+  <div class="subTasks-header" *ngIf="subTasks$ | async as subTasks">
+    <div class="form-container">
+      <form [formGroup]="form">
+        <input
+          formControlName="title"
+          type="title"
+          placeholder="Title"
+          data-cy="newTitle"
+          data-testid="newTitle"
+          (keydown.enter)="onSubmit()"
+        />
+      </form>
+    </div>
+    <table *ngIf="subTasks && subTasks.length > 0">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-cy="subTasks" *ngFor="let subTask of subTasks$ | async">
+          <td data-cy="showTitle" data-testid="showTitle">
+            {{ subTask.title }}
+          </td>
+          <td>
+            <button
+              data-cy="deleteButton"
+              data-testid="deleteButton"
+              class="delete"
+              (click)="onDelete(subTask.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button
+      data-testid="closeDrawer"
+      class="close-subtasks-drawer"
+      (click)="onCloseSlidePanel()"
+    >
+      Close Drawer
+    </button>
+  </div>
+</app-slide-panel>
