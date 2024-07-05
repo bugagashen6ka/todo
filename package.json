@@ -7,7 +7,7 @@
     "clean": "npm run clean --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "test:ci": "npm run test --workspaces --if-present",
-    "test:integration": "npm run test --workspaces --if-present",
+    "test:integration:frontend": "npm run test:integration --workspace=frontend",
     "start:frontend": "npm run start --workspace=frontend",
     "start:backend": "npm run start --workspace=backend"
   },

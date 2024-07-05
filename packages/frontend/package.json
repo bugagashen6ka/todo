@@ -9,9 +9,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand",
-    "test:integration": "ng e2e",
+    "test:integration": "ng e2e --headless --watch false",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run --headless --browser chrome"
   },
   "private": true,
   "dependencies": {
