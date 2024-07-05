@@ -1,10 +1,10 @@
-import ToDoRepository from './data/repositories/ToDoRepository';
+import ToDoRepository from './data/repositories/toDoRepository';
 import { CreateSubTaskUseCase } from './domain/useCases/subTasks/CreateSubTaskUseCase';
 import { DeleteSubTaskUseCase } from './domain/useCases/subTasks/DeleteSubTaskUseCase';
 import { CreateTaskUseCase } from './domain/useCases/tasks/CreateTaskUseCase';
 import { DeleteTaskUseCase } from './domain/useCases/tasks/DeleteTaskUseCase';
 import { GetAllTasksUseCase } from './domain/useCases/tasks/GetAllTasksUseCase';
-import { GetTaskUseCase } from './domain/useCases/tasks/GetTaskUseCase copy';
+import { GetTaskUseCase } from './domain/useCases/tasks/GetTaskUseCase';
 import { UpdateTaskUseCase } from './domain/useCases/tasks/UpdateTaskUseCase';
 import { SubTasksController } from './presentation/controllers/subTasksController';
 import { TasksController } from './presentation/controllers/tasksController';

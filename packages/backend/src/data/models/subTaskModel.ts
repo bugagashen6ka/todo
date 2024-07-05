@@ -4,7 +4,7 @@ import { SubTaskDocument } from '../../core/types/subtask.interface';
 export const subTaskSchema = new Schema<SubTaskDocument>({
   title: {
     type: String,
-    required: true,
+    required: [true, 'SubTask title is required'],
   },
 });
 

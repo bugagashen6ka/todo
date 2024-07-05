@@ -3,8 +3,7 @@ import { ApplicationError } from '../../core/utils/errors/applicationError';
 import SubTaskEntity from '../../domain/entities/SubTaskEntity';
 import TaskEntity from '../../domain/entities/TaskEntity';
 import ITodoRepository from '../../domain/repositories/ITodoRepository';
-import TaskModel from '../models/task';
-import { TaskDocument } from '../../core/types/task.interface';
+import TaskModel from '../models/taskModel';
 import { SubTaskDocument } from '../../core/types/subtask.interface';
 
 export default class ToDoRepository implements ITodoRepository {
@@ -43,7 +42,7 @@ export default class ToDoRepository implements ITodoRepository {
   async createSubTask(id: string, subTask: SubTaskEntity): Promise<SubTaskEntity[]> {
     const task = await TaskModel.findById(id);
     if (!task) {
-      throw ApplicationError.notFound(`Failed to create a subTask. Task with taskId=${id} not found.`);
+      throw ApplicationError.badRequest(`Failed to create a subTask. Task with id=${id} not found.`);
     }
 
     task.subTasks.push(subTask);
@@ -52,12 +51,12 @@ export default class ToDoRepository implements ITodoRepository {
   }
   async deleteSubTask(subTaskId: string): Promise<{ deleted: boolean }> {
     const subTaskObjectId = new mongoose.Types.ObjectId(subTaskId);
-    const deletedTask = await TaskModel.updateOne(
+    const res: mongoose.UpdateWriteOpResult = await TaskModel.updateOne(
       {
         'subTasks._id': subTaskObjectId,
       },
       { $pull: { subTasks: { _id: subTaskObjectId } } },
     );
-    return { deleted: true };
+    return res.matchedCount === 1 ? { deleted: true } : { deleted: false };
   }
 }

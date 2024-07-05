@@ -9,12 +9,9 @@ export class ApplicationError extends Error {
     public statusCode: HttpStatusCode,
   ) {
     super(message);
-
-    //Error.captureStackTrace(this);
   }
 
   static notFound(message: string): ApplicationError {
-    console.log('NotFoundError', message);
     return new ApplicationError('NotFoundError', message, HttpStatusCode.NOT_FOUND);
   }
 

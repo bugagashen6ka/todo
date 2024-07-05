@@ -5,7 +5,7 @@ import cors from 'cors';
 import { errorHandler } from './presentation/middlewares/errorHandler';
 import { ServerOptions } from './core/types/serverOptions.type';
 import { ApplicationError } from './core/utils/errors/applicationError';
-import { router } from './composition-root';
+import { router } from './compositionRoot';
 
 export class ExpressServer {
   public readonly app = express();
@@ -20,6 +20,7 @@ export class ExpressServer {
     this.addErrorHandling();
 
     this.httpServer.listen(this.serverOptions.port, () => {
+      // istanbul ignore next
       console.log(`API is listening on port ${this.serverOptions.port}`);
     });
   }
@@ -45,6 +46,7 @@ export class ExpressServer {
   }
 
   public close(): void {
+    // istanbul ignore next
     this.httpServer?.close();
   }
 }
