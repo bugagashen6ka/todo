@@ -43,8 +43,4 @@ jobs:
         run: npm run test:integration:backend
 
       - name: Run frontend intagration tests
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: ./packages/frontend
-          start: npm run test:integration
-          wait-on: 'http://localhost:4200'
+        run: npm run test:integration:frontend
