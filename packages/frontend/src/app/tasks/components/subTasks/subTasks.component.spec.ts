@@ -2,29 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TasksService } from '../../../shared/services/tasks.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SubTasksComponent } from './subTasks.component';
 import { BehaviorSubject, map } from 'rxjs';
 import { SubTaskInterface } from '../../../shared/types/subTask.interface';
 import { SubTasksService } from '../../../shared/services/subTasks.service';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-
-//Shallow testing
-@Component({
-  standalone: true,
-  selector: 'app-slide-panel',
-  template: '',
-})
-class SlidePanelComponentMock {
-  @Input() isOpen = false;
-  @Input() headerText = 'Slide Panel Header';
-  @Output() onClose = new EventEmitter();
-}
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SlidePanelComponent } from '../slide-panel/slide-panel.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MockAnimationDriver } from '@angular/animations/browser/testing';
+import { AnimationDriver } from '@angular/animations/browser';
 
 describe('SubtasksComponent', () => {
   let component = SubTasksComponent.prototype;
@@ -33,10 +19,11 @@ describe('SubtasksComponent', () => {
   let tasksService: TasksService;
   let subTasksService: SubTasksService;
   let formBuilder: FormBuilder;
-  const id = '123';
+  const taskId = '123';
+  const subTaskId = '456';
   const dummySubTasks: SubTaskInterface[] = [
     {
-      id,
+      id: subTaskId,
       title: 'dummy subTitle',
     },
   ];
@@ -45,19 +32,17 @@ describe('SubtasksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SubTasksComponent],
-      imports: [
-        HttpClientTestingModule,
-        SlidePanelComponentMock,
-        ReactiveFormsModule,
+      declarations: [SubTasksComponent, SlidePanelComponent],
+      imports: [HttpClientTestingModule, ReactiveFormsModule, BrowserAnimationsModule],
+      providers: [
+        TasksService,
+        SubTasksService,
+        {
+          provide: AnimationDriver,
+          useClass: MockAnimationDriver,
+        },
       ],
-      providers: [TasksService, SubTasksService],
-    })
-      .overrideComponent(SubTasksComponent, {
-        remove: { imports: [SubTasksComponent] },
-        add: { imports: [SlidePanelComponentMock] },
-      })
-      .compileComponents();
+    }).compileComponents();
     fixture = TestBed.createComponent(SubTasksComponent);
     component = fixture.componentInstance;
     formBuilder = TestBed.inject(FormBuilder);
@@ -67,10 +52,11 @@ describe('SubtasksComponent', () => {
           value: dummySubTasks[0].title,
           disabled: true,
         },
-        Validators.required
+        Validators.required,
       ),
     });
-    component.taskId = '123';
+    component.taskId = taskId;
+    component.isOpen = true;
     component.subTasks$ = subTasksSubject.asObservable();
     tasksService = TestBed.inject(TasksService);
     subTasksService = TestBed.inject(SubTasksService);
@@ -81,105 +67,34 @@ describe('SubtasksComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  /*
   it('should get subTasks of the task', () => {
-    const showTitle = fixture.debugElement.query(
-      By.css(`[data-testid="showTitle"]`)
-    );
+    const showTitle = fixture.debugElement.query(By.css(`[data-testid="showTitle"]`));
 
-    expect(showTitle.nativeElement.textContent.trim()).toEqual(
-      dummySubTasks[0].title
-    );
+    expect(showTitle.nativeElement.textContent.trim()).toEqual(dummySubTasks[0].title);
   });
 
-  
-  it('should activate editing mode and pass correct task id for title', () => {
-    const showTitle = fixture.debugElement.query(
-      By.css(`[data-testid="showTitle"]`)
-    );
-    showTitle.triggerEventHandler('click');
-
-    expect(component.editingTaskId).toEqual(id);
-    expect(component.editingProperty).toEqual('title');
+  it('should add a subTask with title', () => {
+    jest.spyOn(subTasksService, 'createSubTask').mockImplementation(() => {});
+    const titleInput = fixture.debugElement.query(By.css('[data-testid="newTitle"]'));
+    titleInput.nativeElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+    expect(subTasksService.createSubTask).toHaveBeenCalledWith(taskId, dummySubTasks[0].title);
   });
 
-  it('should activate editing mode and pass correct task id for description', () => {
-    const showDescription = fixture.debugElement.query(
-      By.css(`[data-testid="showDescription"]`)
-    );
-    showDescription.triggerEventHandler('click');
+  it('should delete a subtask', () => {
+    jest.spyOn(subTasksService, 'deleteSubTask').mockImplementation(() => {});
 
-    expect(component.editingTaskId).toEqual(id);
-    expect(component.editingProperty).toEqual('description');
+    const deleteButton = fixture.debugElement.query(By.css(`[data-testid="deleteButton"]`));
+    deleteButton.nativeElement.click(subTaskId);
+
+    expect(subTasksService.deleteSubTask).toHaveBeenCalledWith(taskId, subTaskId);
   });
 
-  it('should change title of the task', () => {
-    const editedTitle = 'new title';
-    jest.spyOn(tasksService, 'updateTask').mockImplementation(() => {});
-    component.setInEditMode(dummyTasks[0].id, 'title');
-    fixture.detectChanges();
-    const editTitle = fixture.debugElement.query(
-      By.css(`[data-testid="editTitle"]`)
-    );
-    editTitle.nativeElement.value = editedTitle;
-    editTitle.nativeElement.dispatchEvent(
-      new KeyboardEvent('keyup', { key: 'Enter' })
-    );
+  it('should close slide panel', () => {
+    jest.spyOn(component.closeEvent, 'emit').mockImplementation(() => {});
+    const closeSlidePanelButton = fixture.debugElement.query(By.css(`[data-testid="closeSlidePanelButton"]`));
+    closeSlidePanelButton.nativeElement.click();
 
-    expect(tasksService.updateTask).toHaveBeenCalledWith(
-      id,
-      editedTitle,
-      dummyTasks[0].description,
-      dummyTasks[0].completed
-    );
+    expect(component.closeEvent.emit).toHaveBeenCalled();
+    expect(component.isOpen).toBe(false);
   });
-
-  it('should change description of the task', () => {
-    const editedDescription = 'new description';
-    jest.spyOn(tasksService, 'updateTask').mockImplementation(() => {});
-    component.setInEditMode(dummyTasks[0].id, 'description');
-    fixture.detectChanges();
-    const editDescription = fixture.debugElement.query(
-      By.css(`[data-testid="editDescription"]`)
-    );
-    editDescription.nativeElement.value = editedDescription;
-    editDescription.nativeElement.dispatchEvent(
-      new KeyboardEvent('keyup', { key: 'Enter' })
-    );
-
-    expect(tasksService.updateTask).toHaveBeenCalledWith(
-      id,
-      dummyTasks[0].title,
-      editedDescription,
-      dummyTasks[0].completed
-    );
-  });
-
-  it('should change completion state of the task', () => {
-    jest.spyOn(tasksService, 'updateTask').mockImplementation(() => {});
-
-    const toggleTask = fixture.debugElement.query(
-      By.css(`[data-testid="toggle"]`)
-    );
-    toggleTask.nativeElement.click();
-
-    expect(tasksService.updateTask).toHaveBeenCalledWith(
-      id,
-      dummyTasks[0].title,
-      dummyTasks[0].description,
-      !dummyTasks[0].completed
-    );
-  });
-
-  it('should delete the task', () => {
-    jest.spyOn(tasksService, 'deleteTask').mockImplementation(() => {});
-
-    const deleteButton = fixture.debugElement.query(
-      By.css(`[data-testid="deleteButton"]`)
-    );
-    deleteButton.nativeElement.click();
-
-    expect(tasksService.deleteTask).toHaveBeenCalledWith(id);
-  });
-  */
 });

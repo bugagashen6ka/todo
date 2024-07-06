@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "format:check": "prettier --check **/*.ts",
+    "format:fix": "prettier --write **/*.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand",

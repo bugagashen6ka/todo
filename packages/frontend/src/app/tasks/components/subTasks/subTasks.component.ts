@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { Observable } from 'rxjs';
@@ -31,13 +24,13 @@ export class SubTasksComponent implements OnChanges {
   constructor(
     private tasksService: TasksService,
     private subTasksService: SubTasksService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.subTasks$ = this.tasksService.tasks$.pipe(
       map((tasks) => {
         const matchedTask = tasks.find((task) => task.id === this.taskId);
         return matchedTask ? matchedTask.subTasks : [];
-      })
+      }),
     );
   }
 
@@ -47,7 +40,7 @@ export class SubTasksComponent implements OnChanges {
         map((tasks) => {
           const matchedTask = tasks.find((task) => task.id === this.taskId);
           return matchedTask ? matchedTask.subTasks : [];
-        })
+        }),
       );
     }
   }

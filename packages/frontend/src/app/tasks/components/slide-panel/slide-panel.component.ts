@@ -1,11 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-slide-panel',
@@ -17,9 +11,7 @@ import {
         style({ opacity: 0, transform: 'translateX(100%)' }),
         animate('300ms', style({ opacity: 1, transform: 'translateX(0)' })),
       ]),
-      transition(':leave', [
-        animate('300ms', style({ opacity: 0, transform: 'translateX(100%)' })),
-      ]),
+      transition(':leave', [animate('300ms', style({ opacity: 0, transform: 'translateX(100%)' }))]),
     ]),
   ],
 })

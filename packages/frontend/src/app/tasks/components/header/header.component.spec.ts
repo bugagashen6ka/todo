@@ -2,12 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { TasksService } from '../../../shared/services/tasks.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 describe('HeaderComponent', () => {
@@ -34,17 +29,18 @@ describe('HeaderComponent', () => {
           value: dummyTitle,
           disabled: true,
         },
-        Validators.required
+        Validators.required,
       ),
       description: new FormControl(
         {
           value: dummyDescription,
           disabled: true,
         },
-        Validators.required
+        Validators.required,
       ),
     });
     tasksService = TestBed.inject(TasksService);
+
     fixture.detectChanges();
   });
 
@@ -54,23 +50,11 @@ describe('HeaderComponent', () => {
 
   it('should add a task with title and description', () => {
     jest.spyOn(tasksService, 'createTask').mockImplementation(() => {});
-    const titleInput = fixture.debugElement.query(
-      By.css('[data-testid="newTitle"]')
-    );
-    titleInput.nativeElement.dispatchEvent(
-      new KeyboardEvent('keyup', { key: 'Enter' })
-    );
-    const descriptionInput = fixture.debugElement.query(
-      By.css('[data-testid="newDescription"]')
-    );
-    descriptionInput.nativeElement.dispatchEvent(
-      new KeyboardEvent('keyup', { key: 'Enter' })
-    );
-    expect(tasksService.createTask).toHaveBeenCalledWith(
-      dummyTitle,
-      dummyDescription,
-      dummyIsCompleted
-    );
+    const titleInput = fixture.debugElement.query(By.css('[data-testid="newTitle"]'));
+    titleInput.nativeElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+    const descriptionInput = fixture.debugElement.query(By.css('[data-testid="newDescription"]'));
+    descriptionInput.nativeElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+    expect(tasksService.createTask).toHaveBeenCalledWith(dummyTitle, dummyDescription, dummyIsCompleted);
   });
 
   it('should not add a task without title and description', () => {
@@ -82,29 +66,21 @@ describe('HeaderComponent', () => {
           value: emptyValue,
           disabled: true,
         },
-        Validators.required
+        Validators.required,
       ),
       description: new FormControl(
         {
           value: emptyValue,
           disabled: true,
         },
-        Validators.required
+        Validators.required,
       ),
     });
-    const titleInput = fixture.debugElement.query(
-      By.css('[data-testid="newTitle"]')
-    );
-    titleInput.nativeElement.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Enter' })
-    );
+    const titleInput = fixture.debugElement.query(By.css('[data-testid="newTitle"]'));
+    titleInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
 
-    const descriptionInput = fixture.debugElement.query(
-      By.css('[data-testid="newDescription"]')
-    );
-    descriptionInput.nativeElement.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Enter' })
-    );
+    const descriptionInput = fixture.debugElement.query(By.css('[data-testid="newDescription"]'));
+    descriptionInput.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     expect(tasksService.createTask).not.toHaveBeenCalled;
   });
 });

@@ -29,7 +29,7 @@ Run `npm install` in the repository root to install all dependencies.
 In order to store todo data persistently, a MongoDB database is used. The simplest way to start a local instance is by running a Docker container with the [official MongoDB image](https://hub.docker.com/_/mongo/tags).
 
 ```
-docker run -d -p 27017-27109:27017-27019 --name mongodb mongo:latest
+docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:latest
 ```
 
 The backend is implemented using the Express framework, Node.js, and TypeScript. To start the backend server, please run the command below from the root of the monorepository:
