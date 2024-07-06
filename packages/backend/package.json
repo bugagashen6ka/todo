@@ -7,7 +7,8 @@
     "build:ci": "npm run format:check",
     "format:check": "prettier --check **/*.ts",
     "format:fix": "prettier --write **/*.ts",
-    "test": "jest",
+    "test": "jest --testPathIgnorePatterns=integrationTests.spec.ts$",
+    "test:integration": "jest --testPathPattern=integrationTests.spec.ts$",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "start": "nodemon src/app.ts"

@@ -5,7 +5,6 @@ import { router as routerFailure } from '../../compositionRootMockFailure';
 import { HttpStatusCode } from '../../../src/core/utils/httpStatusCode';
 import { BaseTask } from '../../../src/core/types/task.interface';
 import bodyParser from 'body-parser';
-import { title } from 'process';
 
 describe('SubTasksController', () => {
   const baseTask: BaseTask = {

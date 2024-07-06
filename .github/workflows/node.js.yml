@@ -39,6 +39,9 @@ jobs:
       - name: Run unit tests
         run: npm test
 
+      - name: Run backend intagration tests
+        run: npm run test:integration:backend
+
       - name: Run frontend intagration tests
         uses: cypress-io/github-action@v6
         with:
