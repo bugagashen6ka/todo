@@ -4,7 +4,6 @@
   "description": "TODO app backend",
   "main": "index.js",
   "scripts": {
-    "build:ci": "npm run format:check",
     "format:check": "prettier --check **/*.ts",
     "format:fix": "prettier --write **/*.ts",
     "test": "jest --testPathIgnorePatterns=integrationTests.spec.ts$",

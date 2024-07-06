@@ -1,9 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { TasksService } from './tasks.service';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TaskInterface } from '../types/task.interface';
 import { environment } from '../../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -61,17 +58,13 @@ describe('SubTasksService', () => {
     it('should add new subTask under existing task', () => {
       subTasksService.tasksService.tasks$.next([dummyTask]);
       subTasksService.createSubTask(dummyTask.id, dummySubTask.title);
-      const req = httpTestingController.expectOne(
-        environment.apiUrl + `/tasks/subtask`
-      );
+      const req = httpTestingController.expectOne(environment.apiUrl + `/tasks/subtask`);
       const dummyTaskWithUpdatedSubTask = {
         ...dummyTask,
         subTasks: [dummySubTask],
       };
       req.flush([dummySubTask]);
-      expect(subTasksService.tasksService.tasks$.getValue()).toEqual([
-        dummyTaskWithUpdatedSubTask,
-      ]);
+      expect(subTasksService.tasksService.tasks$.getValue()).toEqual([dummyTaskWithUpdatedSubTask]);
     });
 
     it('should delete subTask from existing task', () => {
@@ -83,12 +76,10 @@ describe('SubTasksService', () => {
       ]);
       subTasksService.deleteSubTask(dummyTask.id, dummySubTask.id);
       const req = httpTestingController.expectOne(
-        environment.apiUrl + `/tasks/${dummyTask.id}/subtask/${dummySubTask.id}`
+        environment.apiUrl + `/tasks/${dummyTask.id}/subtask/${dummySubTask.id}`,
       );
       req.flush({ modifiedCount: 1 });
-      expect(subTasksService.tasksService.tasks$.getValue()).toEqual([
-        dummyTask,
-      ]);
+      expect(subTasksService.tasksService.tasks$.getValue()).toEqual([dummyTask]);
     });
   });
 });

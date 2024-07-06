@@ -32,12 +32,7 @@ export class TasksService {
       });
   }
 
-  updateTask(
-    id: string,
-    title: string,
-    description: string,
-    completed: boolean
-  ): void {
+  updateTask(id: string, title: string, description: string, completed: boolean): void {
     const url = environment.apiUrl + '/tasks';
     this.http
       .put<TaskInterface>(url, {
@@ -47,31 +42,19 @@ export class TasksService {
         completed,
       })
       .subscribe((data) => {
-        this.setUpdatedTask(
-          data.id,
-          data.title,
-          data.description,
-          data.completed
-        );
+        this.setUpdatedTask(data.id, data.title, data.description, data.completed);
       });
   }
 
   deleteTask(id: string): void {
     const url = environment.apiUrl + `/tasks/${id}`;
     this.http.delete<TaskInterface>(url).subscribe(() => {
-      const currentTasks = this.tasks$
-        .getValue()
-        .filter((task) => task.id !== id);
+      const currentTasks = this.tasks$.getValue().filter((task) => task.id !== id);
       this.tasks$.next(currentTasks);
     });
   }
 
-  private setUpdatedTask(
-    id: string,
-    title: string,
-    description: string,
-    completed: boolean
-  ): void {
+  private setUpdatedTask(id: string, title: string, description: string, completed: boolean): void {
     const updatedTasks = this.tasks$.getValue().map((task) => {
       if (task.id === id) {
         return {

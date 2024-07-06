@@ -53,7 +53,7 @@ describe('Todos', () => {
       },
       {
         body: tasks,
-      }
+      },
     )
       .intercept(
         {
@@ -62,7 +62,7 @@ describe('Todos', () => {
         },
         {
           body: addedTask,
-        }
+        },
       )
       .intercept(
         {
@@ -76,7 +76,7 @@ describe('Todos', () => {
             description: updatedDescription,
             completed: !tasks[0].completed,
           },
-        }
+        },
       )
       .intercept(
         {
@@ -85,7 +85,7 @@ describe('Todos', () => {
         },
         {
           body: { deleted: 1 },
-        }
+        },
       )
       .intercept(
         {
@@ -94,7 +94,7 @@ describe('Todos', () => {
         },
         {
           body: [subTask, addedSubTask],
-        }
+        },
       )
       .intercept(
         {
@@ -103,7 +103,7 @@ describe('Todos', () => {
         },
         {
           body: { deleted: 1 },
-        }
+        },
       );
     //Start each test from home page
     cy.visit('/');
@@ -117,21 +117,13 @@ describe('Todos', () => {
   });
 
   it('renders title correctly', () => {
-    cy.get('[data-cy="taskTitle"]')
-      .eq(0)
-      .should('contain.text', tasks[0].title);
-    cy.get('[data-cy="taskTitle"]')
-      .eq(1)
-      .should('contain.text', tasks[1].title);
+    cy.get('[data-cy="taskTitle"]').eq(0).should('contain.text', tasks[0].title);
+    cy.get('[data-cy="taskTitle"]').eq(1).should('contain.text', tasks[1].title);
   });
 
   it('renders description correctly', () => {
-    cy.get('[data-cy="taskDescription"]')
-      .eq(0)
-      .should('contain.text', tasks[0].description);
-    cy.get('[data-cy="taskDescription"]')
-      .eq(1)
-      .should('contain.text', tasks[1].description);
+    cy.get('[data-cy="taskDescription"]').eq(0).should('contain.text', tasks[0].description);
+    cy.get('[data-cy="taskDescription"]').eq(1).should('contain.text', tasks[1].description);
   });
 
   it('renders completed state correctly', () => {
@@ -141,9 +133,7 @@ describe('Todos', () => {
 
   it('adds new task', () => {
     cy.get('[data-cy="newTaskTitle"]').type(`${addedTask.title}`);
-    cy.get('[data-cy="newDescription"]').type(
-      `${addedTask.description}{enter}`
-    );
+    cy.get('[data-cy="newDescription"]').type(`${addedTask.description}{enter}`);
     cy.get('[data-cy="tasks"]').should('have.length', tasks.length + 1);
     cy.get('[data-cy="tasks"]').eq(0).should('contain.text', tasks[0].title);
     cy.get('[data-cy="tasks"]').eq(1).should('contain.text', tasks[1].title);
@@ -160,18 +150,12 @@ describe('Todos', () => {
   });
 
   it('chahges description of a task ', () => {
-    cy.get('[data-cy="tasks"]')
-      .eq(0)
-      .should('contain.text', tasks[0].description);
+    cy.get('[data-cy="tasks"]').eq(0).should('contain.text', tasks[0].description);
     cy.get('[data-cy="taskDescription"]').eq(0).click();
 
-    cy.get('[data-cy="editDescription"]')
-      .eq(0)
-      .type(`${updatedDescription}{enter}`);
+    cy.get('[data-cy="editDescription"]').eq(0).type(`${updatedDescription}{enter}`);
 
-    cy.get('[data-cy="tasks"]')
-      .eq(0)
-      .should('contain.text', updatedDescription);
+    cy.get('[data-cy="tasks"]').eq(0).should('contain.text', updatedDescription);
   });
 
   it('toggles completeion state of a task', () => {
@@ -182,9 +166,7 @@ describe('Todos', () => {
 
   it('deletes a task', () => {
     cy.get('[data-cy="newTaskTitle"]').type(`${addedTask.title}`);
-    cy.get('[data-cy="newDescription"]').type(
-      `${addedTask.description}{enter}`
-    );
+    cy.get('[data-cy="newDescription"]').type(`${addedTask.description}{enter}`);
     cy.get('[data-cy="tasks"]').should('have.length', 3);
     cy.get('[data-cy="deleteTaskButton"]').eq(2).click();
 
@@ -193,24 +175,15 @@ describe('Todos', () => {
 
   it('renders subTasks', () => {
     cy.get('[data-cy="subtasks"]').eq(1).click();
-    cy.get('[data-cy="showTitle"]')
-      .eq(0)
-      .should('contain.text', tasks[1].subTasks[0].title);
+    cy.get('[data-cy="showTitle"]').eq(0).should('contain.text', tasks[1].subTasks[0].title);
   });
 
   it('adds new subTask', () => {
     cy.get('[data-cy="subtasks"]').eq(1).click();
     cy.get('[data-cy="newTitle"]').type('foo{enter}');
-    cy.get('[data-cy="subTasks"]').should(
-      'have.length',
-      tasks[1].subTasks.length + 1
-    );
-    cy.get('[data-cy="subTasks"]')
-      .eq(0)
-      .should('contain.text', tasks[1].subTasks[0].title);
-    cy.get('[data-cy="subTasks"]')
-      .eq(1)
-      .should('contain.text', addedSubTask.title);
+    cy.get('[data-cy="subTasks"]').should('have.length', tasks[1].subTasks.length + 1);
+    cy.get('[data-cy="subTasks"]').eq(0).should('contain.text', tasks[1].subTasks[0].title);
+    cy.get('[data-cy="subTasks"]').eq(1).should('contain.text', addedSubTask.title);
   });
 
   it('deletes a subTask', () => {

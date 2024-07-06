@@ -33,12 +33,7 @@ export class MainComponent implements OnInit {
     this.editingProperty = property;
   }
 
-  changeTask(
-    taskId: string,
-    title: string,
-    description: string,
-    completed: boolean
-  ): void {
+  changeTask(taskId: string, title: string, description: string, completed: boolean): void {
     this.tasksService.updateTask(taskId, title, description, completed);
 
     this.editingTaskId = null;

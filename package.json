@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "build:ci": "npm run build:ci --workspaces --if-present",
+    "format:check": "npm run format:check --workspaces --if-present",
+    "format:fix": "npm run format:fix --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "test:ci": "npm run test --workspaces --if-present",

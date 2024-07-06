@@ -19,19 +19,8 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [
-    TasksComponent,
-    HeaderComponent,
-    MainComponent,
-    SlidePanelComponent,
-    SubTasksComponent,
-  ],
-  imports: [
-    CommonModule,
-    BrowserAnimationsModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-  ],
+  declarations: [TasksComponent, HeaderComponent, MainComponent, SlidePanelComponent, SubTasksComponent],
+  imports: [CommonModule, BrowserAnimationsModule, RouterModule.forChild(routes), ReactiveFormsModule],
   providers: [provideHttpClient(), TasksService, SubTasksService],
 })
 export class TasksModule {}

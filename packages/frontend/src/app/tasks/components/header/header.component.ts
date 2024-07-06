@@ -14,15 +14,14 @@ export class HeaderComponent {
     description: ['', [Validators.required]],
   });
 
-  constructor(private tasksService: TasksService, private fb: FormBuilder) {}
+  constructor(
+    private tasksService: TasksService,
+    private fb: FormBuilder,
+  ) {}
 
   onSubmit(): void {
     if (this.form.value.title && this.form.value.description) {
-      this.tasksService.createTask(
-        this.form.value.title,
-        this.form.value.description,
-        false
-      );
+      this.tasksService.createTask(this.form.value.title, this.form.value.description, false);
     }
     this.form.reset();
   }

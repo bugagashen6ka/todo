@@ -33,10 +33,7 @@ export class SubTasksService {
     });
   }
 
-  private setCreatedSubTask(
-    id: string,
-    updatedSubTasks: SubTaskInterface[]
-  ): void {
+  private setCreatedSubTask(id: string, updatedSubTasks: SubTaskInterface[]): void {
     const updatedTasks = this.tasksService.tasks$.getValue().map((task) => {
       if (task.id === id) {
         task.subTasks = updatedSubTasks;
@@ -49,9 +46,7 @@ export class SubTasksService {
 
   private setDeletedSubTask(id: string, subTaskId: string): void {
     const updatedTasks = this.tasksService.tasks$.getValue().map((task) => {
-      const subTasks = task.subTasks.filter(
-        (subTask) => subTask.id !== subTaskId
-      );
+      const subTasks = task.subTasks.filter((subTask) => subTask.id !== subTaskId);
       task.subTasks = subTasks;
       return task;
     });
