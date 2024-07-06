@@ -25,6 +25,15 @@ describe('SubTasksService', () => {
     updatedAt: new Date().toISOString(),
     subTasks: [],
   };
+  const dummyTask2: TaskInterface = {
+    id: '456',
+    title: 'Work Hard 2',
+    description: 'Eat Sleep Compute 2',
+    completed: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    subTasks: [],
+  };
   const tasksServiceMock = {
     tasks$: new BehaviorSubject<TaskInterface[]>([]),
   };
@@ -56,7 +65,7 @@ describe('SubTasksService', () => {
 
   describe('createSubTask', () => {
     it('should add new subTask under existing task', () => {
-      subTasksService.tasksService.tasks$.next([dummyTask]);
+      subTasksService.tasksService.tasks$.next([dummyTask, dummyTask2]);
       subTasksService.createSubTask(dummyTask.id, dummySubTask.title);
       const req = httpTestingController.expectOne(environment.apiUrl + `/tasks/subtask`);
       const dummyTaskWithUpdatedSubTask = {
@@ -64,7 +73,7 @@ describe('SubTasksService', () => {
         subTasks: [dummySubTask],
       };
       req.flush([dummySubTask]);
-      expect(subTasksService.tasksService.tasks$.getValue()).toEqual([dummyTaskWithUpdatedSubTask]);
+      expect(subTasksService.tasksService.tasks$.getValue()).toEqual([dummyTaskWithUpdatedSubTask, dummyTask2]);
     });
 
     it('should delete subTask from existing task', () => {

@@ -13,7 +13,7 @@ import { TasksService } from '../../../shared/services/tasks.service';
   templateUrl: './subTasks.component.html',
 })
 export class SubTasksComponent implements OnChanges {
-  subTasks$: Observable<SubTaskInterface[]>;
+  subTasks$: Observable<SubTaskInterface[]> | undefined;
   @Input() isOpen = false;
   @Input() taskId: string | null = '';
   @Output() closeEvent = new EventEmitter<void>();
@@ -25,14 +25,7 @@ export class SubTasksComponent implements OnChanges {
     private tasksService: TasksService,
     private subTasksService: SubTasksService,
     private fb: FormBuilder,
-  ) {
-    this.subTasks$ = this.tasksService.tasks$.pipe(
-      map((tasks) => {
-        const matchedTask = tasks.find((task) => task.id === this.taskId);
-        return matchedTask ? matchedTask.subTasks : [];
-      }),
-    );
-  }
+  ) {}
 
   ngOnChanges(): void {
     if (this.taskId) {
@@ -43,10 +36,6 @@ export class SubTasksComponent implements OnChanges {
         }),
       );
     }
-  }
-
-  openSlidePanel() {
-    this.isOpen = true;
   }
 
   onCloseSlidePanel() {

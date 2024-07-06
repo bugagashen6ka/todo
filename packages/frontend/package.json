@@ -9,6 +9,7 @@
     "format:check": "prettier --check **/*.ts",
     "format:fix": "prettier --write **/*.ts",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "test:ci": "jest --runInBand",
     "test:integration": "ng e2e --headless --watch false",

@@ -11,6 +11,7 @@ import { SlidePanelComponent } from '../slide-panel/slide-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockAnimationDriver } from '@angular/animations/browser/testing';
 import { AnimationDriver } from '@angular/animations/browser';
+import { TaskInterface } from '../../../shared/types/task.interface';
 
 describe('SubtasksComponent', () => {
   let component = SubTasksComponent.prototype;
@@ -25,6 +26,17 @@ describe('SubtasksComponent', () => {
     {
       id: subTaskId,
       title: 'dummy subTitle',
+    },
+  ];
+  const dummyTasks: TaskInterface[] = [
+    {
+      id: taskId,
+      title: 'Work Hard',
+      description: 'Eat Sleep Compute',
+      completed: false,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      subTasks: [],
     },
   ];
 
@@ -59,6 +71,7 @@ describe('SubtasksComponent', () => {
     component.isOpen = true;
     component.subTasks$ = subTasksSubject.asObservable();
     tasksService = TestBed.inject(TasksService);
+    tasksService.tasks$.next(dummyTasks);
     subTasksService = TestBed.inject(SubTasksService);
     fixture.detectChanges();
   });
@@ -96,5 +109,12 @@ describe('SubtasksComponent', () => {
 
     expect(component.closeEvent.emit).toHaveBeenCalled();
     expect(component.isOpen).toBe(false);
+  });
+
+  it('should get list of subTasks on ngOnChanges', () => {
+    component.ngOnChanges();
+    component.subTasks$!.subscribe((data) => {
+      expect(data).toBe(dummySubTasks);
+    });
   });
 });

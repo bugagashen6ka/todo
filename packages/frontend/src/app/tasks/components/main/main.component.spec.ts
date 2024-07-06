@@ -147,4 +147,17 @@ describe('MainComponent', () => {
 
     expect(tasksService.deleteTask).toHaveBeenCalledWith(id);
   });
+
+  it('should open slide panel', () => {
+    const editSubTasksButton = fixture.debugElement.query(By.css(`[data-testid="subtasks"]`));
+    editSubTasksButton.nativeElement.click();
+
+    expect(component.isSlidePanelOpen).toBe(true);
+  });
+
+  it('should handle closed slide panel', () => {
+    component.onCloseSlidePanel();
+    expect(component.isSlidePanelOpen).toBe(false);
+    expect(component.editingTaskId).toBe(null);
+  });
 });
