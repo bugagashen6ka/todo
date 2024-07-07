@@ -20,7 +20,6 @@ export class ExpressServer {
     this.addErrorHandling();
 
     this.httpServer.listen(this.serverOptions.port, () => {
-      // istanbul ignore next
       console.log(`API is listening on port ${this.serverOptions.port}`);
     });
   }
@@ -46,7 +45,6 @@ export class ExpressServer {
   }
 
   public close(): void {
-    // istanbul ignore next
     this.httpServer?.close();
   }
 }

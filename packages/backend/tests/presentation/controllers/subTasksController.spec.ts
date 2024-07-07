@@ -51,8 +51,8 @@ describe('SubTasksController', () => {
       app.listen().close();
     });
 
-    it('PATCH /api/tasks/subtask endpoint returns not found if task is missing', async () => {
-      const res = await request(app).patch(`/api/tasks/subtask`);
+    it('PATCH /api/tasks/:id/subtask endpoint returns not found if task is missing', async () => {
+      const res = await request(app).patch(`/api/tasks/${123456789}/subtask`);
       expect(res.statusCode).toEqual(HttpStatusCode.NOT_FOUND);
     });
 

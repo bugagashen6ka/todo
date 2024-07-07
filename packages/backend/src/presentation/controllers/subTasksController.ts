@@ -11,11 +11,7 @@ export class SubTasksController {
     private createSubTaskUseCase: CreateSubTaskUseCase,
     private deleteSubTaskUseCase: DeleteSubTaskUseCase,
   ) {}
-  public createSubTask = async (
-    req: ExpressBodyRequest<{ id: string } & { subTask: SubTask }>,
-    res: Response,
-    next: NextFunction,
-  ) => {
+  public createSubTask = async (req: ExpressBodyRequest<{ subTask: SubTask }>, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       const { subTask } = req.body;

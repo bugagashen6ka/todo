@@ -35,6 +35,7 @@ export default class ToDoRepository implements ITodoRepository {
       { new: true },
     );
   }
+
   deleteTask(id: string): Promise<TaskEntity | null> {
     return TaskModel.findByIdAndDelete(id);
   }
@@ -49,6 +50,7 @@ export default class ToDoRepository implements ITodoRepository {
     await task.save();
     return (task.subTasks as SubTaskDocument[]).map((subTask) => new SubTaskEntity(subTask.title, subTask.id));
   }
+
   async deleteSubTask(subTaskId: string): Promise<{ deleted: boolean }> {
     const subTaskObjectId = new mongoose.Types.ObjectId(subTaskId);
     const res: mongoose.UpdateWriteOpResult = await TaskModel.updateOne(
