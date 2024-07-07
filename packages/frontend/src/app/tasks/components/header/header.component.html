@@ -5,18 +5,15 @@
       <input
         formControlName="title"
         type="title"
-        placeholder="Title"
+        placeholder="Title (required)"
         data-cy="newTaskTitle"
         data-testid="newTitle"
         (keyup.enter)="onSubmit()"
       />
-      <div *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
-        <small *ngIf="form.get('title')?.errors">Title is required.</small>
-      </div>
       <input
         formControlName="description"
         type="description"
-        placeholder="Description"
+        placeholder="Description (required)"
         data-cy="newDescription"
         data-testid="newDescription"
         (keydown.enter)="onSubmit()"

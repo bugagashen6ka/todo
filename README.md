@@ -80,6 +80,6 @@ Currently, during the installation of dependencies, we encounter an npm warning:
 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 ```
 
-Th outdated dependency is already adressed by [alpha version of jest](https://github.com/jestjs/jest/blob/v30.0.0-alpha.5/packages/jest-reporters/package.json#L27).
+The outdated dependency is already adressed by [alpha version of jest](https://github.com/jestjs/jest/blob/v30.0.0-alpha.5/packages/jest-reporters/package.json#L27).
 
 [Link to issue discussion](https://github.com/jestjs/jest/issues/15087).
