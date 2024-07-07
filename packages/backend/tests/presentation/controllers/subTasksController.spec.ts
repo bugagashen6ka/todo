@@ -1,18 +1,11 @@
 import request from 'supertest';
 import { ExpressServer } from '../../../src/server';
-import { mockSubTask, normalisedMockTask, router as routerSucces } from '../../compositionRootMockSuccess';
+import { mockSubTask, router as routerSucces } from '../../compositionRootMockSuccess';
 import { router as routerFailure } from '../../compositionRootMockFailure';
 import { HttpStatusCode } from '../../../src/core/utils/httpStatusCode';
-import { BaseTask } from '../../../src/core/types/task.interface';
 import bodyParser from 'body-parser';
 
 describe('SubTasksController', () => {
-  const baseTask: BaseTask = {
-    title: normalisedMockTask.title,
-    description: normalisedMockTask.description,
-    completed: normalisedMockTask.completed,
-  };
-
   describe('Succesfull requests', () => {
     const app = new ExpressServer({
       port: 3333,
@@ -27,8 +20,8 @@ describe('SubTasksController', () => {
       app.listen().close();
     });
 
-    it('PATCH /api/tasks/subtask endpoint creates a subtask', async () => {
-      const res = await request(app).patch('/api/tasks/subtask');
+    it('PATCH /api/tasks/:id/subtask endpoint creates a subtask', async () => {
+      const res = await request(app).patch(`/api/tasks/${123456789}/subtask`);
       const { body, statusCode } = res;
       expect(body).toEqual([mockSubTask]);
       expect(statusCode).toEqual(HttpStatusCode.CREATED);

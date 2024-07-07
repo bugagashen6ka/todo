@@ -67,7 +67,7 @@ describe('SubTasksService', () => {
     it('should add new subTask under existing task', () => {
       subTasksService.tasksService.tasks$.next([dummyTask, dummyTask2]);
       subTasksService.createSubTask(dummyTask.id, dummySubTask.title);
-      const req = httpTestingController.expectOne(environment.apiUrl + `/tasks/subtask`);
+      const req = httpTestingController.expectOne(environment.apiUrl + `/tasks/${dummyTask.id}/subtask`);
       const dummyTaskWithUpdatedSubTask = {
         ...dummyTask,
         subTasks: [dummySubTask],

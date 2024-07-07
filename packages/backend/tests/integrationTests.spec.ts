@@ -138,11 +138,9 @@ describe('Integration Tests', () => {
     expect(statusCode).toEqual(HttpStatusCode.OK);
   });
 
-  it('PATCH /api/tasks/subtask endpoint creates a subtask', async () => {
+  it('PATCH /api/tasks/:id/subtaskendpoint creates a subtask', async () => {
     const subTask = { subTask: { title: 'SubTask Title' } };
-    const res = await request(server.app)
-      .patch(`/api/tasks/subtask`)
-      .send({ id, ...subTask });
+    const res = await request(server.app).patch(`/api/tasks/${id}/subtask`).send(subTask);
 
     const { body, statusCode } = res;
     expect(body[0]).toEqual(

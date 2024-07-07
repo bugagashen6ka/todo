@@ -90,7 +90,7 @@ describe('Todos', () => {
       .intercept(
         {
           method: 'PATCH',
-          url: `${environment.apiUrl}/tasks/subtask`,
+          url: `${environment.apiUrl}/tasks/${tasks[1].id}/subtask`,
         },
         {
           body: [subTask, addedSubTask],

@@ -17,7 +17,7 @@ export class TodoRouter {
     router.put('/api/tasks', this.tasksController.updateTask);
     router.delete('/api/tasks/:id', this.tasksController.deleteTask);
 
-    router.patch('/api/tasks/subtask', this.subTasksController.createSubTask);
+    router.patch('/api/tasks/:id/subtask', this.subTasksController.createSubTask);
     router.delete('/api/tasks/:id/subtask/:subtaskid', this.subTasksController.deleteSubTask);
 
     return router;

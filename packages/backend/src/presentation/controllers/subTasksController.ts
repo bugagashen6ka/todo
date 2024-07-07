@@ -17,7 +17,8 @@ export class SubTasksController {
     next: NextFunction,
   ) => {
     try {
-      const { id, subTask } = req.body;
+      const { id } = req.params;
+      const { subTask } = req.body;
       const subTasks = await this.createSubTaskUseCase.execute(id, subTask);
       if (!subTasks) {
         throw ApplicationError.notFound(`Could not create subTask for task id ${id}`);

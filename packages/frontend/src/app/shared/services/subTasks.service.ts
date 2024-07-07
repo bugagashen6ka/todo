@@ -13,10 +13,9 @@ export class SubTasksService {
   constructor(private http: HttpClient) {}
 
   createSubTask(id: string, title: string): void {
-    const url = environment.apiUrl + `/tasks/subtask`;
+    const url = environment.apiUrl + `/tasks/${id}/subtask`;
     this.http
       .patch<SubTaskInterface[]>(url, {
-        id,
         subTask: {
           title,
         },
